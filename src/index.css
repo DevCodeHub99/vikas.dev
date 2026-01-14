@@ -1,0 +1,90 @@
+@import "tailwindcss";
+
+@theme {
+  /* ============================================
+     Light Theme - Vibrant & Modern
+     Purple-teal gradient feel, clean white base
+     ============================================ */
+  --color-background: #ffffff;
+  --color-foreground: #1a1a2e;
+  --color-card: #ffffff;
+  --color-card-foreground: #1a1a2e;
+  --color-popover: #ffffff;
+  --color-popover-foreground: #1a1a2e;
+  --color-primary: #7c3aed;
+  --color-primary-foreground: #ffffff;
+  --color-secondary: #14b8a6;
+  --color-secondary-foreground: #ffffff;
+  --color-muted: #f4f4f5;
+  --color-muted-foreground: #71717a;
+  --color-accent: #06b6d4;
+  --color-accent-foreground: #ffffff;
+  --color-destructive: #e11d48;
+  --color-destructive-foreground: #ffffff;
+  --color-border: #e4e4e7;
+  --color-input: #f4f4f5;
+  --color-ring: #7c3aed;
+
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+}
+
+/* ============================================
+   Dark Theme - Luxury Tech
+   Bold, premium, addictive
+   ============================================ */
+.dark {
+  --color-background: #0c0c14;
+  --color-foreground: #f8f8fc;
+  --color-card: #14141f;
+  --color-card-foreground: #f8f8fc;
+  --color-popover: #14141f;
+  --color-popover-foreground: #f8f8fc;
+  --color-primary: #F1B355;
+  --color-primary-foreground: #0c0c14;
+  --color-secondary: #1A7884;
+  --color-secondary-foreground: #ffffff;
+  --color-muted: #1e1e2d;
+  --color-muted-foreground: #a1a1b5;
+  --color-accent: #48FF9D;
+  --color-accent-foreground: #0c0c14;
+  --color-destructive: #ff4d6a;
+  --color-destructive-foreground: #ffffff;
+  --color-border: #2a2a3d;
+  --color-input: #1e1e2d;
+  --color-ring: #F1B355;
+}
+
+@layer base {
+  * { @apply border-border; }
+  html { scroll-behavior: smooth; }
+  body { @apply bg-background text-foreground antialiased; }
+  
+  ::selection {
+    @apply bg-primary/30 text-foreground;
+  }
+  
+  :focus-visible {
+    @apply outline-none ring-2 ring-primary ring-offset-2 ring-offset-background;
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply bg-card/60 backdrop-blur-xl border border-border/50 shadow-lg;
+  }
+  .sr-only:focus { @apply not-sr-only; }
+}

@@ -1,0 +1,118 @@
+# ================================
+# Dependencies
+# ================================
+node_modules
+.pnp
+.pnp.js
+
+# ================================
+# Build Output
+# ================================
+dist
+dist-ssr
+build
+out
+.output
+.next
+.nuxt
+
+# ================================
+# Environment Variables (CRITICAL)
+# ================================
+.env
+.env.*
+!.env.example
+
+# ================================
+# Logs
+# ================================
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# ================================
+# Editor & IDE
+# ================================
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+*.sublime-*
+.project
+.classpath
+.settings
+
+# ================================
+# OS Files
+# ================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# ================================
+# Deployment & Hosting
+# ================================
+.vercel
+.netlify
+.serverless
+.firebase
+
+# ================================
+# Cache & Temp
+# ================================
+.cache
+.parcel-cache
+.turbo
+*.tsbuildinfo
+*.local
+.temp
+.tmp
+tmp
+
+# ================================
+# Testing & Coverage
+# ================================
+coverage
+*.lcov
+.nyc_output
+cypress/videos
+cypress/screenshots
+playwright-report
+
+# ================================
+# Debug & Profiling
+# ================================
+*.cpuprofile
+*.heapprofile
+*.heapsnapshot
+
+# ================================
+# Package Manager Locks (keep one)
+# ================================
+# Uncomment if you want to ignore:
+# yarn.lock
+# pnpm-lock.yaml
+
+# ================================
+# Misc
+# ================================
+*.pem
+*.key
+*.cert
+.history
+*.bak
+*.backup
