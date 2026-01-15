@@ -43,6 +43,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(400).json({ message: "Invalid email address" });
     }
 
+    console.log("Sending email to:", TO_EMAIL);
+    console.log("From:", email);
+    console.log("API Key exists:", !!RESEND_API_KEY);
+
     // Send email via Resend
     const response = await fetch("https://api.resend.com/emails", {
       method: "POST",
@@ -66,16 +70,19 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       }),
     });
 
+    const responseText = await response.text();
+    console.log("Resend response status:", response.status);
+    console.log("Resend response:", responseText);
+
     if (!response.ok) {
-      const error = await response.json();
-      console.error("Resend error:", error);
-      return res.status(500).json({ message: "Failed to send email" });
+      console.error("Resend error:", responseText);
+      return res.status(500).json({ message: "Failed to send email", details: responseText });
     }
 
     return res.status(200).json({ success: true });
   } catch (error) {
     console.error("Contact form error:", error);
-    return res.status(500).json({ message: "Internal server error" });
+    return res.status(500).json({ message: "Internal server error", error: String(error) });
   }
 }
 
