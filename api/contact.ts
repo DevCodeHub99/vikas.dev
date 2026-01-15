@@ -1,5 +1,4 @@
-// Vercel Serverless Function for Contact Form
-// Deploy to Vercel and set RESEND_API_KEY in environment variables
+import type { VercelRequest, VercelResponse } from "@vercel/node";
 
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const TO_EMAIL = process.env.CONTACT_EMAIL || "your-email@example.com";
@@ -8,16 +7,6 @@ interface ContactBody {
   name: string;
   email: string;
   message: string;
-}
-
-interface VercelRequest {
-  method?: string;
-  body?: string | ContactBody;
-}
-
-interface VercelResponse {
-  status(code: number): VercelResponse;
-  json(data: any): void;
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
