@@ -10,55 +10,48 @@ interface ContactBody {
   message: string;
 }
 
-export default async function handler(req: Request): Promise<Response> {
+interface VercelRequest {
+  method?: string;
+  body?: string | ContactBody;
+}
+
+interface VercelResponse {
+  status(code: number): VercelResponse;
+  json(data: any): void;
+}
+
+export default async function handler(req: VercelRequest, res: VercelResponse) {
   // Only allow POST
   if (req.method !== "POST") {
-    return new Response(JSON.stringify({ message: "Method not allowed" }), {
-      status: 405,
-      headers: { "Content-Type": "application/json" },
-    });
+    return res.status(405).json({ message: "Method not allowed" });
   }
 
   // Check API key
   if (!RESEND_API_KEY) {
     console.error("RESEND_API_KEY not configured");
-    return new Response(JSON.stringify({ message: "Email service not configured" }), {
-      status: 500,
-      headers: { "Content-Type": "application/json" },
-    });
+    return res.status(500).json({ message: "Email service not configured" });
   }
 
   try {
-    const { name, email, message } = (await req.json()) as ContactBody;
+    const body = typeof req.body === "string" ? JSON.parse(req.body) : req.body;
+    const { name, email, message } = body as ContactBody;
 
     // Validate input
     if (!name || !email || !message) {
-      return new Response(JSON.stringify({ message: "All fields are required" }), {
-        status: 400,
-        headers: { "Content-Type": "application/json" },
-      });
+      return res.status(400).json({ message: "All fields are required" });
     }
 
     if (name.length < 2) {
-      return new Response(JSON.stringify({ message: "Name must be at least 2 characters" }), {
-        status: 400,
-        headers: { "Content-Type": "application/json" },
-      });
+      return res.status(400).json({ message: "Name must be at least 2 characters" });
     }
 
     if (message.length < 10) {
-      return new Response(JSON.stringify({ message: "Message must be at least 10 characters" }), {
-        status: 400,
-        headers: { "Content-Type": "application/json" },
-      });
+      return res.status(400).json({ message: "Message must be at least 10 characters" });
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      return new Response(JSON.stringify({ message: "Invalid email address" }), {
-        status: 400,
-        headers: { "Content-Type": "application/json" },
-      });
+      return res.status(400).json({ message: "Invalid email address" });
     }
 
     // Send email via Resend
@@ -87,22 +80,13 @@ export default async function handler(req: Request): Promise<Response> {
     if (!response.ok) {
       const error = await response.json();
       console.error("Resend error:", error);
-      return new Response(JSON.stringify({ message: "Failed to send email" }), {
-        status: 500,
-        headers: { "Content-Type": "application/json" },
-      });
+      return res.status(500).json({ message: "Failed to send email" });
     }
 
-    return new Response(JSON.stringify({ success: true }), {
-      status: 200,
-      headers: { "Content-Type": "application/json" },
-    });
+    return res.status(200).json({ success: true });
   } catch (error) {
     console.error("Contact form error:", error);
-    return new Response(JSON.stringify({ message: "Internal server error" }), {
-      status: 500,
-      headers: { "Content-Type": "application/json" },
-    });
+    return res.status(500).json({ message: "Internal server error" });
   }
 }
 
@@ -116,7 +100,3 @@ function escapeHtml(text: string): string {
   };
   return text.replace(/[&<>"']/g, (m) => map[m]);
 }
-
-export const config = {
-  runtime: "edge",
-};
