@@ -37,8 +37,30 @@
     <meta name="theme-color" content="#7c3aed" />
     
     <!-- Preconnect to external domains -->
-    <link rel="preconnect" href="https://images.unsplash.com" />
     <link rel="preconnect" href="https://dev.to" />
+    <link rel="dns-prefetch" href="https://api.dev.to" />
+    
+    <!-- Preload critical fonts -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" as="style" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Dev Portfolio",
+      "url": "https://devcodehub99.vercel.app",
+      "jobTitle": "Full Stack Developer",
+      "description": "Crafting polished, high-performance web applications with a focus on user experience and clean architecture.",
+      "sameAs": [
+        "https://github.com/DevCodeHub99",
+        "https://linkedin.com/in/yourprofile",
+        "https://x.com/DevCodeHub99"
+      ],
+      "knowsAbout": ["React", "TypeScript", "Node.js", "Web Development", "Full Stack Development"]
+    }
+    </script>
     
     <!-- Prevent FOUC for theme -->
     <script>

@@ -1,4 +1,4 @@
-import { useCallback, useSyncExternalStore } from "react";
+import { useState, useEffect, useCallback } from "react";
 import type { Theme } from "@/types";
 
 const STORAGE_KEY = "theme";
@@ -18,7 +18,6 @@ function getResolvedTheme(): "light" | "dark" {
   return stored === "system" ? getSystemTheme() : stored;
 }
 
-// Apply theme to DOM
 function applyTheme(theme: Theme) {
   const resolved = theme === "system" ? getSystemTheme() : theme;
   document.documentElement.classList.remove("light", "dark");
@@ -26,50 +25,36 @@ function applyTheme(theme: Theme) {
   localStorage.setItem(STORAGE_KEY, theme);
 }
 
-// External store for theme
-let listeners: Array<() => void> = [];
-
-function subscribe(listener: () => void) {
-  listeners.push(listener);
-  
-  // Listen for system theme changes
-  const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-  const handler = () => {
-    if (getStoredTheme() === "system") {
-      applyTheme("system");
-      listeners.forEach(l => l());
-    }
-  };
-  mediaQuery.addEventListener("change", handler);
-  
-  return () => {
-    listeners = listeners.filter(l => l !== listener);
-    mediaQuery.removeEventListener("change", handler);
-  };
-}
-
-function getSnapshot() {
-  return getStoredTheme();
-}
-
-function getServerSnapshot() {
-  return "system" as Theme;
-}
-
 export function useTheme() {
-  const theme = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+  const [theme, setThemeState] = useState<Theme>(() => getStoredTheme());
   const resolvedTheme = getResolvedTheme();
 
+  // Apply theme on mount and when theme changes
+  useEffect(() => {
+    applyTheme(theme);
+  }, [theme]);
+
+  // Listen for system theme changes
+  useEffect(() => {
+    if (theme !== "system") return;
+
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    const handler = () => {
+      applyTheme("system");
+    };
+
+    mediaQuery.addEventListener("change", handler);
+    return () => mediaQuery.removeEventListener("change", handler);
+  }, [theme]);
+
   const setTheme = useCallback((newTheme: Theme) => {
-    applyTheme(newTheme);
-    listeners.forEach(l => l());
+    setThemeState(newTheme);
   }, []);
 
   const toggleTheme = useCallback(() => {
-    const newTheme = getResolvedTheme() === "dark" ? "light" : "dark";
-    applyTheme(newTheme);
-    listeners.forEach(l => l());
-  }, []);
+    const newTheme = resolvedTheme === "dark" ? "light" : "dark";
+    setThemeState(newTheme);
+  }, [resolvedTheme]);
 
   return { theme, resolvedTheme, setTheme, toggleTheme };
 }

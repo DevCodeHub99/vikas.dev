@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 import { motion } from "framer-motion";
 import { Section } from "@/components/layout";
 import { useSkills } from "@/hooks/use-portfolio";
@@ -28,10 +27,7 @@ function SkillSkeleton() {
 }
 
 function SkillCard({ skill, index }: { skill: Skill; index: number }) {
-  const Icon = useMemo(() => {
-    if (!skill.icon || !iconMap[skill.icon]) return iconMap.Code2;
-    return iconMap[skill.icon];
-  }, [skill.icon]);
+  const Icon = skill.icon ? (iconMap[skill.icon] || iconMap.Code2) : iconMap.Code2;
   
   return (
     <motion.div

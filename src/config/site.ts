@@ -14,20 +14,23 @@ export const siteConfig = {
   name: "Dev Portfolio",
   title: "Full Stack Developer",
   email: "DevCodeHub99@gmail.com",
-  
+
   // URLs
   url: "https://DevCodeHub99.vercel.app",
   resumeUrl: "/resume.pdf",           // Place file in /public folder
   ogImage: "/og-image.png",           // 1200x630px recommended
-  
+
+  // Contact Form (Formspree)
+  formspreeUrl: "https://formspree.io/f/xreeeyvl",  // Update with your Formspree form ID
+
   // Blog Integration (Dev.to)
   devToUsername: "devcodehub99",      // Your Dev.to username
-  
+
   // SEO
   description: "Crafting polished, high-performance web applications with a focus on user experience and clean architecture.",
   keywords: [
     "Full Stack Developer",
-    "React Developer", 
+    "React Developer",
     "TypeScript",
     "Web Development",
     "Frontend Developer",
@@ -71,24 +74,24 @@ export const stats: Stat[] = [
 // ============================================
 // 5. SKILLS
 // ============================================
-// Icon names from: lucide-react, react-icons (Fa*, Si*)
+// Icon names from: lucide-react
 // Colors: Use brand colors for authenticity
 export const skills: Skill[] = [
   // Frontend
-  { id: 1, name: "React", category: "frontend", icon: "FaReact", color: "#61DAFB" },
-  { id: 2, name: "TypeScript", category: "frontend", icon: "SiTypescript", color: "#3178C6" },
-  { id: 3, name: "Next.js", category: "frontend", icon: "SiNextdotjs", color: "#000000" },
-  { id: 4, name: "Tailwind CSS", category: "frontend", icon: "SiTailwindcss", color: "#06B6D4" },
+  { id: 1, name: "React", category: "frontend", icon: "Code2", color: "#61DAFB" },
+  { id: 2, name: "TypeScript", category: "frontend", icon: "Code2", color: "#3178C6" },
+  { id: 3, name: "Next.js", category: "frontend", icon: "Code2", color: "#000000" },
+  { id: 4, name: "Tailwind CSS", category: "frontend", icon: "Palette", color: "#06B6D4" },
   // Backend
-  { id: 5, name: "Node.js", category: "backend", icon: "FaNodeJs", color: "#339933" },
-  { id: 6, name: "PostgreSQL", category: "backend", icon: "SiPostgresql", color: "#4169E1" },
-  { id: 7, name: "MongoDB", category: "backend", icon: "SiMongodb", color: "#47A248" },
-  { id: 8, name: "GraphQL", category: "backend", icon: "SiGraphql", color: "#E10098" },
-  { id: 9, name: "Python", category: "backend", icon: "FaPython", color: "#3776AB" },
+  { id: 5, name: "Node.js", category: "backend", icon: "Server", color: "#339933" },
+  { id: 6, name: "PostgreSQL", category: "backend", icon: "Database", color: "#4169E1" },
+  { id: 7, name: "MongoDB", category: "backend", icon: "Database", color: "#47A248" },
+  { id: 8, name: "GraphQL", category: "backend", icon: "Network", color: "#E10098" },
+  { id: 9, name: "Python", category: "backend", icon: "Code2", color: "#3776AB" },
   // Tools
-  { id: 10, name: "Docker", category: "tools", icon: "FaDocker", color: "#2496ED" },
-  { id: 11, name: "AWS", category: "tools", icon: "FaAws", color: "#FF9900" },
-  { id: 12, name: "Git", category: "tools", icon: "FaGitAlt", color: "#F05032" },
+  { id: 10, name: "Docker", category: "tools", icon: "Cloud", color: "#2496ED" },
+  { id: 11, name: "AWS", category: "tools", icon: "Cloud", color: "#FF9900" },
+  { id: 12, name: "Git", category: "tools", icon: "GitBranch", color: "#F05032" },
 ];
 
 export const skillCategories = {
@@ -98,10 +101,33 @@ export const skillCategories = {
 } as const;
 
 // ============================================
-// 6. PROJECTS
+// 6. TECH STACK CONFIGURATION
+// ============================================
+// Tech stack with brand colors and icons for project display
+export const techConfig: Record<string, { color: string; icon: string }> = {
+  "React": { color: "#61DAFB", icon: "Code2" },
+  "Node.js": { color: "#339933", icon: "Server" },
+  "PostgreSQL": { color: "#4169E1", icon: "Database" },
+  "Next.js": { color: "#000000", icon: "Code2" },
+  "TypeScript": { color: "#3178C6", icon: "Code2" },
+  "Prisma": { color: "#2D3748", icon: "Database" },
+  "WebSocket": { color: "#F7DF1E", icon: "Network" },
+  "Python": { color: "#3776AB", icon: "Code2" },
+  "FastAPI": { color: "#009688", icon: "Server" },
+  "OpenAI": { color: "#412991", icon: "Code2" },
+  "Stripe": { color: "#635BFF", icon: "Code2" },
+  "MongoDB": { color: "#47A248", icon: "Database" },
+  "GraphQL": { color: "#E10098", icon: "Network" },
+  "Docker": { color: "#2496ED", icon: "Cloud" },
+  "AWS": { color: "#FF9900", icon: "Cloud" },
+  "Tailwind CSS": { color: "#06B6D4", icon: "Palette" },
+} as const;
+
+// ============================================
+// 7. PROJECTS
 // ============================================
 // Images: Use Unsplash or your own screenshots
-// Tech: Must match keys in Projects.tsx techConfig for icons
+// Tech: Must match keys in techConfig for icons
 export const projects: Project[] = [
   {
     id: 1,
@@ -133,7 +159,7 @@ export const projects: Project[] = [
 ];
 
 // ============================================
-// 7. TESTIMONIALS
+// 8. TESTIMONIALS
 // ============================================
 // Images: Use professional headshots (Unsplash or real photos)
 // Note: Replace with real testimonials when you have them
@@ -165,7 +191,7 @@ export const testimonials: Testimonial[] = [
 ];
 
 // ============================================
-// 8. CONTACT SECTION
+// 9. CONTACT SECTION
 // ============================================
 export const contactContent = {
   title: "Let's build something amazing.",
@@ -175,7 +201,7 @@ export const contactContent = {
 } as const;
 
 // ============================================
-// 9. BLOG SECTION
+// 10. BLOG SECTION
 // ============================================
 export const blogContent = {
   title: "Latest Articles",
@@ -184,9 +210,19 @@ export const blogContent = {
 } as const;
 
 // ============================================
-// 10. SOCIAL LINKS
+// 11. FOOTER SECTION
 // ============================================
-// Icons: "Github", "FaLinkedin", "FaTwitter", etc.
+export const footerContent = {
+  copyright: "Designed & built with precision & an unreasonable amount of console.log.",
+  tagline: "No AI was harmed in the making of this portfolio.",
+  formspreeCredit: "Forms powered by Formspree (because reinventing email infrastructure is a bad life choice.).",
+  devHumor: "If something breaks, it's not a bug-it's a feature waiting to be discovered.",
+} as const;
+
+// ============================================
+// 12. SOCIAL LINKS
+// ============================================
+// Icons: Lucide React icons
 export const socialLinks: SocialLink[] = [
   {
     name: "GitHub",
@@ -197,19 +233,19 @@ export const socialLinks: SocialLink[] = [
   {
     name: "LinkedIn",
     url: "https://linkedin.com/in/yourprofile",
-    icon: "FaLinkedin",
+    icon: "Linkedin",
     ariaLabel: "Visit my LinkedIn profile",
   },
   {
-    name: "Twitter",
-    url: "https://twitter.com/DevCodeHub99",
-    icon: "FaTwitter",
-    ariaLabel: "Visit my Twitter profile",
+    name: "X",
+    url: "https://x.com/DevCodeHub99",
+    icon: "X",
+    ariaLabel: "Visit my X profile",
   },
 ];
 
 // ============================================
-// 11. NAVIGATION
+// 13. NAVIGATION
 // ============================================
 export const navLinks = [
   { href: "#about", label: "About" },

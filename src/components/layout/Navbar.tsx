@@ -3,6 +3,8 @@ import { useState, useEffect, useCallback } from "react";
 import { Menu, X, Terminal, Download } from "lucide-react";
 import { navLinks, siteConfig } from "@/config/site";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
+import { throttle } from "@/lib/performance";
+import { PERFORMANCE } from "@/lib/constants";
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -10,8 +12,9 @@ export function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    const throttledScroll = throttle(handleScroll, PERFORMANCE.scrollThrottle);
+    window.addEventListener("scroll", throttledScroll, { passive: true });
+    return () => window.removeEventListener("scroll", throttledScroll);
   }, []);
 
   const scrollToSection = useCallback((e: React.MouseEvent<HTMLAnchorElement>, href: string) => {

@@ -2,27 +2,8 @@ import { motion } from "framer-motion";
 import { Section } from "@/components/layout";
 import { useProjects } from "@/hooks/use-portfolio";
 import { Github, ExternalLink, iconMap, Code2 } from "@/lib/icons";
+import { techConfig } from "@/config/site";
 import type { Project } from "@/types";
-
-// Tech stack with brand colors and icons
-const techConfig: Record<string, { color: string; icon: string }> = {
-  "React": { color: "#61DAFB", icon: "FaReact" },
-  "Node.js": { color: "#339933", icon: "FaNodeJs" },
-  "PostgreSQL": { color: "#4169E1", icon: "SiPostgresql" },
-  "Next.js": { color: "#000000", icon: "SiNextdotjs" },
-  "TypeScript": { color: "#3178C6", icon: "SiTypescript" },
-  "Prisma": { color: "#2D3748", icon: "Database" },
-  "WebSocket": { color: "#F7DF1E", icon: "Code2" },
-  "Python": { color: "#3776AB", icon: "FaPython" },
-  "FastAPI": { color: "#009688", icon: "Code2" },
-  "OpenAI": { color: "#412991", icon: "Code2" },
-  "Stripe": { color: "#635BFF", icon: "Code2" },
-  "MongoDB": { color: "#47A248", icon: "SiMongodb" },
-  "GraphQL": { color: "#E10098", icon: "SiGraphql" },
-  "Docker": { color: "#2496ED", icon: "FaDocker" },
-  "AWS": { color: "#FF9900", icon: "FaAws" },
-  "Tailwind CSS": { color: "#06B6D4", icon: "SiTailwindcss" },
-};
 
 // Pre-resolve icons to avoid creating components during render
 const techIcons = Object.fromEntries(
@@ -68,6 +49,8 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           src={project.imageUrl || FALLBACK_IMAGE}
           alt={project.title}
           loading="lazy"
+          width={800}
+          height={400}
           className="w-full h-full object-cover"
         />
         

@@ -1,68 +1,30 @@
-import { useQuery, useMutation } from "@tanstack/react-query";
-import { useToast } from "@/hooks/use-toast";
+import { useQuery } from "@tanstack/react-query";
 import { projects, skills } from "@/config/site";
-import { fetchDevToArticles, sendContactEmail } from "@/lib/api";
-import type { Project, Skill, DevToArticle } from "@/types";
+import { fetchDevToArticles } from "@/lib/api";
+import type { DevToArticle } from "@/types";
 
 // ============================================
-// Portfolio Hooks
+// Static Data Hooks (No Query Needed)
 // ============================================
-
-const SIMULATED_DELAY = 300;
-
-async function fetchWithDelay<T>(data: T): Promise<T> {
-  await new Promise((r) => setTimeout(r, SIMULATED_DELAY));
-  return data;
-}
 
 export function useProjects() {
-  return useQuery<Project[]>({
-    queryKey: ["projects"],
-    queryFn: () => fetchWithDelay(projects),
-  });
+  return { data: projects, isLoading: false, error: null };
 }
 
 export function useSkills() {
-  return useQuery<Skill[]>({
-    queryKey: ["skills"],
-    queryFn: () => fetchWithDelay(skills),
-  });
+  return { data: skills, isLoading: false, error: null };
 }
 
 // ============================================
-// Blog Hook (Dev.to)
+// Blog Hook (Dev.to API)
 // ============================================
 
 export function useBlogPosts(limit = 6) {
   return useQuery<DevToArticle[]>({
     queryKey: ["blog-posts", limit],
     queryFn: () => fetchDevToArticles(limit),
-    staleTime: 5 * 60 * 1000, // Cache for 5 minutes
-    retry: 2,
-  });
-}
-
-// ============================================
-// Contact Form Hook
-// ============================================
-
-export function useSendMessage() {
-  const { toast } = useToast();
-  
-  return useMutation({
-    mutationFn: sendContactEmail,
-    onSuccess: () => {
-      toast({
-        title: "Message Sent!",
-        description: "Thanks for reaching out. I'll get back to you soon.",
-      });
-    },
-    onError: (error: Error) => {
-      toast({
-        title: "Error",
-        description: error.message || "Something went wrong. Please try again.",
-        variant: "destructive",
-      });
-    },
+    retry: 3,
+    retryDelay: (attemptIndex) => Math.pow(2, attemptIndex) * 1000,
+    staleTime: 1000 * 60 * 60, // 1 hour
   });
 }

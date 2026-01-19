@@ -1,33 +1,35 @@
 import { siteConfig } from "@/config/site";
-import type { DevToArticle, ContactFormData } from "@/types";
+import { API_CONFIG } from "@/lib/constants";
+import type { DevToArticle } from "@/types";
 
-const DEV_TO_API = "https://dev.to/api";
-
-// Fetch blog posts from Dev.to
+// Fetch blog posts from Dev.to with error handling
 export async function fetchDevToArticles(limit = 6): Promise<DevToArticle[]> {
-  const response = await fetch(
-    `${DEV_TO_API}/articles?username=${siteConfig.devToUsername}&per_page=${limit}`
-  );
-  
-  if (!response.ok) {
-    throw new Error("Failed to fetch articles");
+  try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), API_CONFIG.devTo.timeout);
+    
+    const response = await fetch(
+      `${API_CONFIG.devTo.baseUrl}/articles?username=${siteConfig.devToUsername}&per_page=${limit}`,
+      { signal: controller.signal }
+    );
+    
+    clearTimeout(timeoutId);
+    
+    if (!response.ok) {
+      throw new Error(`Dev.to API error: ${response.status}`);
+    }
+    
+    const data = await response.json();
+    
+    // Validate response is an array
+    if (!Array.isArray(data)) {
+      throw new Error("Invalid Dev.to API response format");
+    }
+    
+    return data;
+  } catch (error) {
+    console.error("Failed to fetch Dev.to articles:", error);
+    // Return empty array instead of throwing to allow graceful degradation
+    return [];
   }
-  
-  return response.json();
-}
-
-// Send contact form via serverless function
-export async function sendContactEmail(data: ContactFormData): Promise<{ success: boolean }> {
-  const response = await fetch("/api/contact", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data),
-  });
-  
-  if (!response.ok) {
-    const error = await response.json().catch(() => ({ message: "Failed to send message" }));
-    throw new Error(error.message || "Failed to send message");
-  }
-  
-  return response.json();
 }

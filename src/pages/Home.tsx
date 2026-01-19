@@ -1,6 +1,7 @@
 import { lazy, Suspense } from "react";
 import { Navbar, Footer } from "@/components/layout";
 import { Hero } from "@/components/features";
+import { SectionSkeleton } from "@/components/ui/skeleton";
 
 // Lazy load below-the-fold sections
 const About = lazy(() => import("@/components/features/About").then(m => ({ default: m.About })));
@@ -9,14 +10,6 @@ const Projects = lazy(() => import("@/components/features/Projects").then(m => (
 const Blog = lazy(() => import("@/components/features/Blog").then(m => ({ default: m.Blog })));
 const Testimonials = lazy(() => import("@/components/features/Testimonials").then(m => ({ default: m.Testimonials })));
 const Contact = lazy(() => import("@/components/features/Contact").then(m => ({ default: m.Contact })));
-
-function SectionLoader() {
-  return (
-    <div className="py-20 flex items-center justify-center">
-      <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
-    </div>
-  );
-}
 
 export default function Home() {
   return (
@@ -33,27 +26,27 @@ export default function Home() {
       <main id="main-content">
         <Hero />
         
-        <Suspense fallback={<SectionLoader />}>
+        <Suspense fallback={<SectionSkeleton />}>
           <About />
         </Suspense>
         
-        <Suspense fallback={<SectionLoader />}>
+        <Suspense fallback={<SectionSkeleton />}>
           <Skills />
         </Suspense>
         
-        <Suspense fallback={<SectionLoader />}>
+        <Suspense fallback={<SectionSkeleton />}>
           <Projects />
         </Suspense>
         
-        <Suspense fallback={<SectionLoader />}>
+        <Suspense fallback={<SectionSkeleton />}>
           <Blog />
         </Suspense>
         
-        <Suspense fallback={<SectionLoader />}>
+        <Suspense fallback={<SectionSkeleton />}>
           <Testimonials />
         </Suspense>
         
-        <Suspense fallback={<SectionLoader />}>
+        <Suspense fallback={<SectionSkeleton />}>
           <Contact />
         </Suspense>
       </main>

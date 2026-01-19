@@ -2,12 +2,19 @@ import { motion } from "framer-motion";
 import { Section } from "@/components/layout";
 import { testimonials } from "@/config/site";
 import { Quote } from "lucide-react";
+import { TestimonialSkeleton } from "@/components/ui/skeleton";
 
-export function Testimonials() {
+interface TestimonialsProps {
+  isLoading?: boolean;
+}
+
+export function Testimonials({ isLoading = false }: TestimonialsProps) {
   return (
     <Section id="testimonials" subtitle="Testimonials" title="What People Say" dark>
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {testimonials.map((testimonial, index) => (
+        {isLoading
+          ? Array.from({ length: 3 }).map((_, i) => <TestimonialSkeleton key={i} />)
+          : testimonials.map((testimonial, index) => (
           <motion.article
             key={testimonial.id}
             initial={{ opacity: 0, y: 20 }}
