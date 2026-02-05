@@ -1,8 +1,10 @@
 import { motion } from "framer-motion";
 import { Section } from "@/components/layout";
 import { testimonials } from "@/config/site";
-import { Quote } from "lucide-react";
+import { iconMap } from "@/lib/icons";
 import { TestimonialSkeleton } from "@/components/ui/skeleton";
+
+const Quote = iconMap.Quote;
 
 interface TestimonialsProps {
   isLoading?: boolean;

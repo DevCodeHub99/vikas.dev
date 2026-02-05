@@ -4,11 +4,12 @@
 
 /**
  * Throttle function to limit how often a callback is executed
+ * Used for scroll events in Navbar to improve performance
  * @param callback - Function to throttle
  * @param delay - Minimum delay between executions (ms)
  * @returns Throttled function
  */
-export function throttle<T extends (...args: any[]) => any>(
+export function throttle<T extends (...args: unknown[]) => unknown>(
   callback: T,
   delay: number
 ): (...args: Parameters<T>) => void {
@@ -30,42 +31,4 @@ export function throttle<T extends (...args: any[]) => any>(
       }, delay - timeSinceLastCall);
     }
   };
-}
-
-/**
- * Debounce function to delay callback execution until after a delay
- * @param callback - Function to debounce
- * @param delay - Delay before execution (ms)
- * @returns Debounced function
- */
-export function debounce<T extends (...args: any[]) => any>(
-  callback: T,
-  delay: number
-): (...args: Parameters<T>) => void {
-  let timeoutId: ReturnType<typeof setTimeout> | null = null;
-
-  return function (...args: Parameters<T>) {
-    if (timeoutId) clearTimeout(timeoutId);
-    timeoutId = setTimeout(() => {
-      callback(...args);
-    }, delay);
-  };
-}
-
-/**
- * Check if user prefers reduced motion
- * @returns true if user prefers reduced motion
- */
-export function prefersReducedMotion(): boolean {
-  if (typeof window === "undefined") return false;
-  return window.matchMedia("(prefers-motion: reduce)").matches;
-}
-
-/**
- * Check if device is mobile
- * @returns true if device is mobile
- */
-export function isMobileDevice(): boolean {
-  if (typeof window === "undefined") return false;
-  return window.innerWidth < 768;
 }

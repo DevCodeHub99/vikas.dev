@@ -2,19 +2,22 @@ import { motion } from "framer-motion";
 import { Section } from "@/components/layout";
 import { useSkills } from "@/hooks/use-portfolio";
 import { skillCategories } from "@/config/site";
-import { iconMap, Layout, Database, Terminal } from "@/lib/icons";
+import { iconMap } from "@/lib/icons";
 import type { SkillCategory, Skill } from "@/types";
+import type { IconType } from "react-icons";
 
-const categoryIcons: Record<SkillCategory, typeof Layout> = {
-  frontend: Layout,
-  backend: Database,
-  tools: Terminal,
+const categoryIcons: Record<SkillCategory, IconType> = {
+  frontend: iconMap.Layout,
+  backend: iconMap.Database,
+  tools: iconMap.Terminal,
+  engineering: iconMap.Lightbulb,
 };
 
 const categoryColors: Record<SkillCategory, string> = {
   frontend: "text-primary",
   backend: "text-secondary",
   tools: "text-foreground",
+  engineering: "text-accent",
 };
 
 function SkillSkeleton() {
@@ -27,7 +30,7 @@ function SkillSkeleton() {
 }
 
 function SkillCard({ skill, index }: { skill: Skill; index: number }) {
-  const Icon = skill.icon ? (iconMap[skill.icon] || iconMap.Code2) : iconMap.Code2;
+  const Icon = skill.icon ? (iconMap[skill.icon] || iconMap.Code) : iconMap.Code;
   
   return (
     <motion.div

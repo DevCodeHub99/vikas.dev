@@ -1,28 +1,12 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
+import { SocialLinks } from "@/components/ui/social-links";
 import { heroContent, socialLinks } from "@/config/site";
-import { getIcon, ArrowRight } from "@/lib/icons";
+import { ArrowRight } from "@/lib/icons";
 
-const codeLines = [
-  { text: "const me = {", color: "text-primary" },
-  { text: '  role: "full-stack-dev",', color: "text-muted-foreground" },
-  { text: '  expectations: "world-class product",', color: "text-muted-foreground" },
-  { text: '  reality: "console.log driven dev",', color: "text-secondary" },
-  { text: '  bugs: "rebranded as edge cases",', color: "text-muted-foreground" },
-  { text: "  sleep: null,", color: "text-muted-foreground" },
-  { text: "  stackoverflow: true,", color: "text-muted-foreground" },
-  { text: '  confidence: "depends if build passes"', color: "text-accent" },
-  { text: "};", color: "text-primary" },
-];
-
-const terminalSequence = [
-  { type: "command", text: 'git commit -m "final fix (for real)"' },
-  { type: "output", text: "narrator: it was not the final fix", delay: 800 },
-  { type: "command", text: "npm run prod" },
-  { type: "loading", text: "compiling", delay: 1500 },
-  { type: "success", text: "works on my machine ¯\\_(ツ)_/¯" },
-];
+// Get data from config
+const { codeLines, terminalSequence, codeBlockHeader } = heroContent;
 
 function TypeWriter({ text, onComplete, speed = 50 }: { text: string; onComplete?: () => void; speed?: number }) {
   const [displayed, setDisplayed] = useState("");
@@ -180,11 +164,11 @@ function CodeBlock() {
         {/* Window Header */}
         <div className="flex items-center gap-2 px-4 py-3 border-b border-border bg-muted/30">
           <div className="flex gap-1.5">
-            <div className="w-3 h-3 rounded-full bg-[#ff5f57]" />
-            <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
-            <div className="w-3 h-3 rounded-full bg-[#28ca41]" />
+            <div className="w-3 h-3 rounded-full" style={{ backgroundColor: codeBlockHeader.colors.red }} />
+            <div className="w-3 h-3 rounded-full" style={{ backgroundColor: codeBlockHeader.colors.yellow }} />
+            <div className="w-3 h-3 rounded-full" style={{ backgroundColor: codeBlockHeader.colors.green }} />
           </div>
-          <span className="text-xs text-muted-foreground ml-2 font-mono">~/life/code</span>
+          <span className="text-xs text-muted-foreground ml-2 font-mono">{codeBlockHeader.title}</span>
         </div>
 
         {/* Code Content */}
@@ -277,23 +261,7 @@ export function Hero() {
             </Button>
           </div>
 
-          <div className="mt-12 flex items-center gap-6 text-muted-foreground">
-            {socialLinks.map((link) => {
-              const Icon = getIcon(link.icon);
-              return (
-                <a
-                  key={link.name}
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-foreground hover:scale-110 transition-all"
-                  aria-label={link.ariaLabel}
-                >
-                  <Icon className="w-6 h-6" />
-                </a>
-              );
-            })}
-          </div>
+          <SocialLinks links={socialLinks} className="mt-12" />
         </motion.div>
 
         <HeroVisual />

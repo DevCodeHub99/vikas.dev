@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import type { Theme } from "@/types";
 
 const STORAGE_KEY = "theme";
@@ -13,11 +13,6 @@ function getStoredTheme(): Theme {
   return (localStorage.getItem(STORAGE_KEY) as Theme) || "system";
 }
 
-function getResolvedTheme(): "light" | "dark" {
-  const stored = getStoredTheme();
-  return stored === "system" ? getSystemTheme() : stored;
-}
-
 function applyTheme(theme: Theme) {
   const resolved = theme === "system" ? getSystemTheme() : theme;
   document.documentElement.classList.remove("light", "dark");
@@ -27,7 +22,11 @@ function applyTheme(theme: Theme) {
 
 export function useTheme() {
   const [theme, setThemeState] = useState<Theme>(() => getStoredTheme());
-  const resolvedTheme = getResolvedTheme();
+
+  // Calculate resolved theme using useMemo to avoid effect
+  const resolvedTheme = useMemo(() => {
+    return theme === "system" ? getSystemTheme() : theme;
+  }, [theme]);
 
   // Apply theme on mount and when theme changes
   useEffect(() => {

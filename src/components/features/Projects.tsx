@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Section } from "@/components/layout";
 import { useProjects } from "@/hooks/use-portfolio";
-import { Github, ExternalLink, iconMap, Code2 } from "@/lib/icons";
+import { Github, ExternalLink, iconMap, Code } from "@/lib/icons";
 import { techConfig } from "@/config/site";
 import type { Project } from "@/types";
 
@@ -9,7 +9,7 @@ import type { Project } from "@/types";
 const techIcons = Object.fromEntries(
   Object.entries(techConfig).map(([tech, config]) => [
     tech,
-    iconMap[config.icon] || Code2
+    iconMap[config.icon] || Code
   ])
 );
 
@@ -95,7 +95,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         <div className="flex flex-wrap gap-2">
           {project.techStack.map((tech) => {
             const config = techConfig[tech];
-            const Icon = techIcons[tech] || Code2;
+            const Icon = techIcons[tech] || Code;
             const color = config?.color || "#64748b";
             
             return (

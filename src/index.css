@@ -9,8 +9,6 @@
   --color-foreground: #1a1a2e;
   --color-card: #ffffff;
   --color-card-foreground: #1a1a2e;
-  --color-popover: #ffffff;
-  --color-popover-foreground: #1a1a2e;
   --color-primary: #7c3aed;
   --color-primary-foreground: #ffffff;
   --color-secondary: #14b8a6;
@@ -42,8 +40,6 @@
   --color-foreground: #f8f8fc;
   --color-card: #14141f;
   --color-card-foreground: #f8f8fc;
-  --color-popover: #14141f;
-  --color-popover-foreground: #f8f8fc;
   --color-primary: #F1B355;
   --color-primary-foreground: #0c0c14;
   --color-secondary: #1A7884;

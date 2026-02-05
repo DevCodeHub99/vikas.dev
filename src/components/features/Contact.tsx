@@ -4,11 +4,11 @@ import { Section } from "@/components/layout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { FormError } from "@/components/ui/form-error";
 import { siteConfig, contactContent, socialLinks } from "@/config/site";
 import { Mail, Send, getIcon, CheckCircle, AlertCircle } from "@/lib/icons";
 import { ContactFormSkeleton } from "@/components/ui/skeleton";
 import { validateContactForm } from "@/lib/validation";
-import { useToast } from "@/hooks/use-toast";
 
 // Pre-resolve GitHub icon outside component to avoid render-time creation
 const githubLink = socialLinks.find(l => l.name === "GitHub");
@@ -22,7 +22,6 @@ export function Contact({ isLoading = false }: ContactProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const { toast } = useToast();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -42,14 +41,6 @@ export function Contact({ isLoading = false }: ContactProps) {
     if (!validation.success) {
       setErrors(validation.errors || {});
       setIsSubmitting(false);
-      
-      // Show error toast
-      toast({
-        title: "Validation Error",
-        description: "Please check the form fields and try again.",
-        action: <button className="text-xs">Dismiss</button>,
-      });
-      
       return;
     }
 
@@ -68,12 +59,6 @@ export function Contact({ isLoading = false }: ContactProps) {
       setIsSuccess(true);
       (e.target as HTMLFormElement).reset();
       
-      // Show success toast
-      toast({
-        title: "Message Sent! 🎉",
-        description: "Thank you for reaching out. I'll get back to you soon!",
-      });
-      
       setTimeout(() => {
         setIsSuccess(false);
       }, 4000);
@@ -81,13 +66,6 @@ export function Contact({ isLoading = false }: ContactProps) {
       const errorMessage = error instanceof Error ? error.message : "Failed to send message. Please try again.";
       setErrors({
         submit: errorMessage,
-      });
-      
-      // Show error toast
-      toast({
-        title: "Submission Failed",
-        description: errorMessage,
-        action: <button className="text-xs">Retry</button>,
       });
     } finally {
       setIsSubmitting(false);
@@ -192,19 +170,7 @@ export function Contact({ isLoading = false }: ContactProps) {
                   aria-invalid={!!errors.name}
                   aria-describedby={errors.name ? "name-error" : undefined}
                 />
-                <AnimatePresence>
-                  {errors.name && (
-                    <motion.p
-                      id="name-error"
-                      initial={{ opacity: 0, y: -5 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -5 }}
-                      className="text-red-500 text-sm mt-1 flex items-center gap-1"
-                    >
-                      <span className="text-lg">⚠️</span> {errors.name}
-                    </motion.p>
-                  )}
-                </AnimatePresence>
+                <FormError message={errors.name} id="name-error" />
               </motion.div>
 
               {/* Email Field */}
@@ -230,19 +196,7 @@ export function Contact({ isLoading = false }: ContactProps) {
                   aria-invalid={!!errors.email}
                   aria-describedby={errors.email ? "email-error" : undefined}
                 />
-                <AnimatePresence>
-                  {errors.email && (
-                    <motion.p
-                      id="email-error"
-                      initial={{ opacity: 0, y: -5 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -5 }}
-                      className="text-red-500 text-sm mt-1 flex items-center gap-1"
-                    >
-                      <span className="text-lg">⚠️</span> {errors.email}
-                    </motion.p>
-                  )}
-                </AnimatePresence>
+                <FormError message={errors.email} id="email-error" />
               </motion.div>
 
               {/* Message Field */}
@@ -269,19 +223,7 @@ export function Contact({ isLoading = false }: ContactProps) {
                   aria-invalid={!!errors.message}
                   aria-describedby={errors.message ? "message-error" : undefined}
                 />
-                <AnimatePresence>
-                  {errors.message && (
-                    <motion.p
-                      id="message-error"
-                      initial={{ opacity: 0, y: -5 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -5 }}
-                      className="text-red-500 text-sm mt-1 flex items-center gap-1"
-                    >
-                      <span className="text-lg">⚠️</span> {errors.message}
-                    </motion.p>
-                  )}
-                </AnimatePresence>
+                <FormError message={errors.message} id="message-error" />
               </motion.div>
 
               {/* Submit Button */}

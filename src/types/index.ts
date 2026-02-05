@@ -20,7 +20,7 @@ export interface Skill {
   color?: string;
 }
 
-export type SkillCategory = "frontend" | "backend" | "tools";
+export type SkillCategory = "frontend" | "backend" | "tools" | "engineering";
 
 export interface SocialLink {
   name: string;
@@ -59,3 +59,14 @@ export interface DevToArticle {
 }
 
 export type Theme = "light" | "dark" | "system";
+
+export interface TerminalLine {
+  type: "command" | "output" | "loading" | "success";
+  text: string;
+  delay?: number;
+}
+
+export interface CodeLine {
+  text: string;
+  color: string;
+}

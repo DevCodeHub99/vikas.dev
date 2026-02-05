@@ -1,10 +1,15 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect, useCallback } from "react";
-import { Menu, X, Terminal, Download } from "lucide-react";
+import { iconMap } from "@/lib/icons";
 import { navLinks, siteConfig } from "@/config/site";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { throttle } from "@/lib/performance";
 import { PERFORMANCE } from "@/lib/constants";
+
+const Menu = iconMap.Menu;
+const Close = iconMap.Close;
+const Terminal = iconMap.Terminal;
+const Download = iconMap.Download;
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -116,7 +121,7 @@ export function Navbar() {
             aria-expanded={isOpen}
             aria-controls="mobile-menu"
           >
-            {isOpen ? <X /> : <Menu />}
+            {isOpen ? <Close /> : <Menu />}
           </button>
         </div>
       </div>

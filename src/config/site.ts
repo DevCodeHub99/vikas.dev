@@ -1,16 +1,16 @@
-import type { SocialLink, Stat, Testimonial, Project, Skill } from "@/types";
+import type { SocialLink, Stat, Testimonial, Project, Skill, TerminalLine, CodeLine } from "@/types";
 
 // ╔══════════════════════════════════════════════════════════════════════════════╗
 // ║                           SITE CONFIGURATION                                  ║
-// ║  All site content in one place for easy maintenance                          ║
+// ║  All content organized in the order it appears on the website                ║
 // ║  Update this file to customize your portfolio                                ║
 // ╚══════════════════════════════════════════════════════════════════════════════╝
 
 // ============================================
-// 1. BASIC INFO
+// 1. SITE METADATA & BASIC INFO
 // ============================================
 export const siteConfig = {
-  // Personal
+  // Personal Info
   name: "Dev Portfolio",
   title: "Full Stack Developer",
   email: "DevCodeHub99@gmail.com",
@@ -20,11 +20,9 @@ export const siteConfig = {
   resumeUrl: "/resume.pdf",           // Place file in /public folder
   ogImage: "/og-image.png",           // 1200x630px recommended
 
-  // Contact Form (Formspree)
-  formspreeUrl: "https://formspree.io/f/xreeeyvl",  // Update with your Formspree form ID
-
-  // Blog Integration (Dev.to)
-  devToUsername: "devcodehub99",      // Your Dev.to username
+  // Integrations
+  formspreeUrl: "https://formspree.io/f/xreeeyvl",  // Contact form endpoint
+  devToUsername: "devcodehub99",                     // Dev.to blog integration
 
   // SEO
   description: "Crafting polished, high-performance web applications with a focus on user experience and clean architecture.",
@@ -39,130 +37,229 @@ export const siteConfig = {
 } as const;
 
 // ============================================
-// 2. HERO SECTION
+// 2. NAVIGATION (Top of Page)
+// ============================================
+export const navLinks = [
+  { href: "#about", label: "About" },
+  { href: "#skills", label: "Skills" },
+  { href: "#projects", label: "Projects" },
+  { href: "#blog", label: "Blog" },
+  { href: "#testimonials", label: "Testimonials" },
+  { href: "#contact", label: "Contact" },
+] as const;
+
+// ============================================
+// 3. HERO SECTION (First Section)
 // ============================================
 export const heroContent = {
+  // Main Content
   badge: "Available for new projects",
   headline: "Building digital",
   headlineHighlight: "experiences",
   headlineSuffix: "that matter.",
   subheadline: "I'm a Full Stack Developer crafting polished, high-performance web applications with a focus on user experience and clean architecture.",
+
+  // Code Block Content
+  codeLines: [
+    { text: "const me = {", color: "text-primary" },
+    { text: "  name: Vikas Kumar", color: "text-accent" },
+    { text: '  role: "full-stack-dev",', color: "text-muted-foreground" },
+    { text: '  expectations: "world-class product",', color: "text-muted-foreground" },
+    { text: '  reality: "console.log driven dev",', color: "text-secondary" },
+    { text: '  bugs: "rebranded as edge cases",', color: "text-muted-foreground" },
+    { text: "  stackoverflow: true,", color: "text-muted-foreground" },
+    { text: '  confidence: "depends if build passes"', color: "text-accent" },
+    { text: "};", color: "text-primary" },
+  ] as CodeLine[],
+
+  // Terminal Sequence
+  terminalSequence: [
+    { type: "command" as const, text: 'git commit -m "final fix (for real)"' },
+    { type: "output" as const, text: "narrator: it was not the final fix", delay: 800 },
+    { type: "command" as const, text: "npm run prod" },
+    { type: "loading" as const, text: "compiling", delay: 1500 },
+    { type: "success" as const, text: "works on my machine ¯\\_(ツ)_/¯" },
+  ] as TerminalLine[],
+
+  // Code Block Header
+  codeBlockHeader: {
+    title: "~/root/terminal",
+    colors: {
+      red: "#ff5f57",
+      yellow: "#ffbd2e",
+      green: "#28ca41",
+    },
+  },
 } as const;
 
 // ============================================
-// 3. ABOUT SECTION
+// 4. ABOUT SECTION (Second Section)
 // ============================================
 export const aboutContent = {
   title: "Designer by eye, Developer by code.",
   subtitle: "About Me",
   paragraphs: [
-    "I believe that great software is a blend of robust engineering and intuitive design. With over 5 years of experience in full-stack development, I bridge the gap between creative vision and technical execution.",
-    "When I'm not coding, I'm exploring new UI trends, contributing to open source, or optimizing application performance. I thrive in collaborative environments where innovation is encouraged.",
+    "I build software the practical way by shipping real products, breaking things, and fixing them better. I care about clean design, solid architecture, and apps that actually work in production, not just in demos.",
+
+    "As a full-stack developer, I handle everything end-to-end: crafting responsive UIs with React and Next.js, designing APIs, structuring backends, managing databases, and deploying to live servers. If something fails, I debug it, optimize it, and make it reliable.",
+
+    "Most of my learning comes from doing, not watching. Give me an idea and a terminal, and I'll turn it into a working product. I enjoy solving messy problems, improving performance, and building systems that are simple, scalable, and built to last."
   ],
 } as const;
 
-// ============================================
-// 4. STATS (About Section)
-// ============================================
+// Stats (Part of About Section)
 export const stats: Stat[] = [
-  { value: "5+", label: "Years Experience", colorClass: "text-primary" },
-  { value: "50+", label: "Projects Completed", colorClass: "text-secondary" },
-  { value: "20+", label: "Happy Clients", colorClass: "text-foreground" },
-  { value: "100%", label: "Commitment", colorClass: "text-primary/80" },
+  { value: "1.5+", label: "Years", colorClass: "text-primary" },
+  { value: "15+", label: "Projects", colorClass: "text-secondary" },
+  { value: "30+", label: "APIs Built", colorClass: "text-foreground" },
+  { value: "35+", label: "Deployments", colorClass: "text-primary/80" }
 ];
 
 // ============================================
-// 5. SKILLS
+// 5. SKILLS SECTION (Third Section)
 // ============================================
-// Icon names from: lucide-react
-// Colors: Use brand colors for authenticity
-export const skills: Skill[] = [
-  // Frontend
-  { id: 1, name: "React", category: "frontend", icon: "Code2", color: "#61DAFB" },
-  { id: 2, name: "TypeScript", category: "frontend", icon: "Code2", color: "#3178C6" },
-  { id: 3, name: "Next.js", category: "frontend", icon: "Code2", color: "#000000" },
-  { id: 4, name: "Tailwind CSS", category: "frontend", icon: "Palette", color: "#06B6D4" },
-  // Backend
-  { id: 5, name: "Node.js", category: "backend", icon: "Server", color: "#339933" },
-  { id: 6, name: "PostgreSQL", category: "backend", icon: "Database", color: "#4169E1" },
-  { id: 7, name: "MongoDB", category: "backend", icon: "Database", color: "#47A248" },
-  { id: 8, name: "GraphQL", category: "backend", icon: "Network", color: "#E10098" },
-  { id: 9, name: "Python", category: "backend", icon: "Code2", color: "#3776AB" },
-  // Tools
-  { id: 10, name: "Docker", category: "tools", icon: "Cloud", color: "#2496ED" },
-  { id: 11, name: "AWS", category: "tools", icon: "Cloud", color: "#FF9900" },
-  { id: 12, name: "Git", category: "tools", icon: "GitBranch", color: "#F05032" },
-];
-
 export const skillCategories = {
   frontend: "Frontend Development",
   backend: "Backend Architecture",
   tools: "Tools & DevOps",
+  engineering: "Professional Strengths",
 } as const;
 
+export const skills: Skill[] = [
+  // Frontend
+  { id: 1, name: "JavaScript (ES6+)", category: "frontend", icon: "SiJavascript", color: "#F7DF1E" },
+  { id: 2, name: "React", category: "frontend", icon: "FaReact", color: "#61DAFB" },
+  { id: 3, name: "Next.js", category: "frontend", icon: "SiNextdotjs", color: "#000000" },
+  { id: 4, name: "TypeScript", category: "frontend", icon: "SiTypescript", color: "#3178C6" },
+  { id: 5, name: "Tailwind CSS", category: "frontend", icon: "SiTailwindcss", color: "#06B6D4" },
+  { id: 6, name: "Responsive UI & Reusable Component", category: "frontend", icon: "FaLayerGroup", color: "#8B5CF6" },
+
+  // Backend
+  { id: 7, name: "Node.js", category: "backend", icon: "FaNodeJs", color: "#339933" },
+  { id: 8, name: "Express & REST APIs", category: "backend", icon: "SiExpress", color: "#000000" },
+  { id: 9, name: "MongoDB", category: "backend", icon: "SiMongodb", color: "#47A248" },
+  { id: 10, name: "PostgreSQL", category: "backend", icon: "SiPostgresql", color: "#4169E1" },
+  { id: 11, name: "Authentication (JWT / Sessions)", category: "backend", icon: "FaUserLock", color: "#EF4444" },
+
+  // Tools
+  { id: 12, name: "Git & GitHub", category: "tools", icon: "FaGitAlt", color: "#F05032" },
+  { id: 13, name: "Linux / CLI / Terminal", category: "tools", icon: "FaTerminal", color: "#4B5563" },
+  { id: 14, name: "Deployment (VPS / Node hosting)", category: "tools", icon: "FaServer", color: "#10B981" },
+  { id: 15, name: "Environment Variables & Config", category: "tools", icon: "FaCogs", color: "#F59E0B" },
+
+  // Professional Strengths
+  { id: 16, name: "API Design & Project Structure", category: "engineering", icon: "FaProjectDiagram", color: "#6366F1" },
+  { id: 17, name: "Debugging & Production Fixes", category: "engineering", icon: "FaBug", color: "#DC2626" },
+  { id: 18, name: "Performance Optimization", category: "engineering", icon: "FaTachometerAlt", color: "#059669" },
+  { id: 19, name: "Scalable Solution & Code Architecture", category: "engineering", icon: "FaSitemap", color: "#7C3AED" },
+];
+
 // ============================================
-// 6. TECH STACK CONFIGURATION
+// 6. PROJECTS SECTION (Fourth Section)
 // ============================================
-// Tech stack with brand colors and icons for project display
+// Tech Stack Configuration (used by projects)
 export const techConfig: Record<string, { color: string; icon: string }> = {
-  "React": { color: "#61DAFB", icon: "Code2" },
-  "Node.js": { color: "#339933", icon: "Server" },
-  "PostgreSQL": { color: "#4169E1", icon: "Database" },
-  "Next.js": { color: "#000000", icon: "Code2" },
-  "TypeScript": { color: "#3178C6", icon: "Code2" },
-  "Prisma": { color: "#2D3748", icon: "Database" },
+  "React": { color: "#61DAFB", icon: "React" },
+  "Node.js": { color: "#339933", icon: "NodeJS" },
+  "PostgreSQL": { color: "#4169E1", icon: "PostgreSQL" },
+  "Next.js": { color: "#000000", icon: "NextJS" },
+  "TypeScript": { color: "#3178C6", icon: "TypeScript" },
+  "Prisma": { color: "#2D3748", icon: "Prisma" },
   "WebSocket": { color: "#F7DF1E", icon: "Network" },
-  "Python": { color: "#3776AB", icon: "Code2" },
-  "FastAPI": { color: "#009688", icon: "Server" },
-  "OpenAI": { color: "#412991", icon: "Code2" },
-  "Stripe": { color: "#635BFF", icon: "Code2" },
-  "MongoDB": { color: "#47A248", icon: "Database" },
-  "GraphQL": { color: "#E10098", icon: "Network" },
-  "Docker": { color: "#2496ED", icon: "Cloud" },
-  "AWS": { color: "#FF9900", icon: "Cloud" },
-  "Tailwind CSS": { color: "#06B6D4", icon: "Palette" },
+  "Python": { color: "#3776AB", icon: "Python" },
+  "FastAPI": { color: "#009688", icon: "FastAPI" },
+  "OpenAI": { color: "#412991", icon: "OpenAI" },
+  "Stripe": { color: "#635BFF", icon: "Stripe" },
+  "MongoDB": { color: "#47A248", icon: "MongoDB" },
+  "GraphQL": { color: "#E10098", icon: "GraphQL" },
+  "Docker": { color: "#2496ED", icon: "Docker" },
+  "AWS": { color: "#FF9900", icon: "AWS" },
+  "Tailwind CSS": { color: "#06B6D4", icon: "TailwindCSS" },
+  "Zustand": { color: "#443E38", icon: "Database" },
+  "html2canvas + jsPDF": { color: "#E34F26", icon: "Code" },
+  "Cloudinary": { color: "#3448C5", icon: "Server" },
+  "Google Gemini AI": { color: "#4285F4", icon: "Lightbulb" },
+  "Vite": { color: "#646CFF", icon: "Code" },
+  "HTML": { color: "#E34F26", icon: "Code" },
+  "CSS": { color: "#1572B6", icon: "Code" },
+  "JavaScript": { color: "#F7DF1E", icon: "Code" },
+  "OpenWeatherMap API": { color: "#EB6E4B", icon: "Server" },
+  "Local Storage": { color: "#FFA500", icon: "Database" },
+  "Redux Toolkit": { color: "#764ABC", icon: "Database" },
+  "React Router": { color: "#CA4245", icon: "Network" },
 } as const;
 
-// ============================================
-// 7. PROJECTS
-// ============================================
-// Images: Use Unsplash or your own screenshots
-// Tech: Must match keys in techConfig for icons
+// Projects Data
 export const projects: Project[] = [
   {
     id: 1,
-    title: "E-Commerce Platform",
-    description: "A full-stack e-commerce solution with real-time inventory management, payment processing, and admin dashboard.",
-    imageUrl: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=800&q=80",
-    githubUrl: "https://github.com",
-    demoUrl: "https://example.com",
-    techStack: ["React", "Node.js", "PostgreSQL", "Stripe"],
+    title: "InvoiceDesk — GST-Compliant Invoicing System",
+    description: "A professional invoice management application built with Next.js and MongoDB, featuring automatic GST calculations, responsive design, PDF invoice generation, multi-state tax handling, and secure multi-user workflows tailored for Indian businesses’ billing needs.",
+    imageUrl: "https://image.thum.io/get/https://shrinavdurgatrade.vercel.app/_vercel/insights/og.png",
+    githubUrl: "https://github.com/DevCodeHub99/sndt-invoice-desk",
+    demoUrl: "https://shrinavdurgatrade.vercel.app",
+    techStack: ["Next.js", "React", "TypeScript", "MongoDB", "Zustand", "Tailwind CSS", "html2canvas + jsPDF"],
   },
   {
     id: 2,
-    title: "Task Management App",
-    description: "Collaborative project management tool with real-time updates, drag-and-drop interface, and team analytics.",
-    imageUrl: "https://images.unsplash.com/photo-1611224923853-80b023f02d71?auto=format&fit=crop&w=800&q=80",
-    githubUrl: "https://github.com",
-    demoUrl: "https://example.com",
-    techStack: ["Next.js", "TypeScript", "Prisma", "WebSocket"],
+    title: "ShopEase E-commerce Platform",
+    description: "A production-ready e-commerce platform built with Next.js and MongoDB, featuring a complete shopping experience with product browsing, cart, wishlist, orders, and a robust admin dashboard. Includes secure user authentication, Cloudinary-powered image management, and scalable API routes for customer and admin workflows.",
+    imageUrl: "https://image.thum.io/get/https://shopease-ecommerce-mu.vercel.app/_vercel/insights/og.png",
+    githubUrl: "https://github.com/DevCodeHub99/shopease-ecommerce/",
+    demoUrl: "https://shopease-ecommerce-mu.vercel.app",
+    techStack: ["Next.js", "React", "MongoDB", "Cloudinary", "Tailwind CSS", "TypeScript"],
   },
   {
     id: 3,
-    title: "AI Content Generator",
-    description: "AI-powered content creation platform with multiple templates, SEO optimization, and export capabilities.",
-    imageUrl: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=800&q=80",
-    githubUrl: "https://github.com",
-    demoUrl: null,
-    techStack: ["Python", "FastAPI", "OpenAI", "React"],
+    title: "VisionVoice — Multilingual AI Visual Aid",
+    description: "A modern accessibility tool that uses AI to convert real-time images into spoken descriptions and translated text for visually impaired users. It supports multiple languages and provides both descriptive and OCR functionalities using Google’s Gemini AI.",
+    imageUrl: "https://image.thum.io/get/https://visionvoice-1073180550844.us-west1.run.app/",
+    githubUrl: "https://github.com/DevCodeHub99/VisionVoice---Multilingual-Visual-Aid-for-the-Visually-Impaired",
+    demoUrl: "https://visionvoice-1073180550844.us-west1.run.app",
+    techStack: ["React", "TypeScript", "Tailwind CSS", "Google Gemini AI", "Vite"],
+  },
+  {
+    id: 4,
+    title: "Weather Forecast Application (CloudCompass)",
+    description: "A responsive weather app that provides accurate real-time weather information for any city using the OpenWeatherMap API. Users can search by city name or use their location to view current conditions, forecasts, temperature, humidity, wind speed, and more.",
+    imageUrl: "https://image.thum.io/get/https://weather947-app.netlify.app",
+    githubUrl: "https://github.com/DevCodeHub99/Weather-Forecast-Application",
+    demoUrl: "https://weather947-app.netlify.app",
+    techStack: ["HTML", "CSS", "JavaScript", "Tailwind CSS", "OpenWeatherMap API"],
+  },
+  {
+    id: 5,
+    title: "Student Registration System",
+  description: "A simple CRUD web application that lets users register students, display registered entries, and edit or delete records. The app stores student data in local storage and ensures form validation for reliable data entry.",
+  imageUrl: "https://image.thum.io/get/https://student-registration-system947.netlify.app",
+  githubUrl: "https://github.com/DevCodeHub99/Student-Registration-System",
+  demoUrl: "https://student-registration-system947.netlify.app",
+  techStack: ["HTML", "CSS", "JavaScript", "Local Storage"],
+  },
+
+  {
+    id: 6,
+    title: "Online Library System",
+    description: "A responsive web application that lets users browse, search, and add books across different categories. It features category-based browsing, detailed book pages, and a clean UI built with modern frontend tooling for fast user experiences.",
+    imageUrl: "https://image.thum.io/get/https://online-library-system-947.netlify.app",
+    githubUrl: "https://github.com/DevCodeHub99/Online-Library-System",
+    demoUrl: "https://online-library-system-947.netlify.app",
+    techStack: ["React", "Redux Toolkit", "React Router", "Tailwind CSS", "Vite"],
   },
 ];
 
 // ============================================
-// 8. TESTIMONIALS
+// 7. BLOG SECTION (Fifth Section)
 // ============================================
-// Images: Use professional headshots (Unsplash or real photos)
-// Note: Replace with real testimonials when you have them
+export const blogContent = {
+  title: "Latest Articles",
+  subtitle: "Blog",
+  description: "Thoughts on development, design, and technology.",
+} as const;
+
+// ============================================
+// 8. TESTIMONIALS SECTION (Sixth Section)
+// ============================================
 export const testimonials: Testimonial[] = [
   {
     id: 1,
@@ -191,7 +288,7 @@ export const testimonials: Testimonial[] = [
 ];
 
 // ============================================
-// 9. CONTACT SECTION
+// 9. CONTACT SECTION (Seventh Section)
 // ============================================
 export const contactContent = {
   title: "Let's build something amazing.",
@@ -201,28 +298,18 @@ export const contactContent = {
 } as const;
 
 // ============================================
-// 10. BLOG SECTION
-// ============================================
-export const blogContent = {
-  title: "Latest Articles",
-  subtitle: "Blog",
-  description: "Thoughts on development, design, and technology.",
-} as const;
-
-// ============================================
-// 11. FOOTER SECTION
+// 10. FOOTER SECTION (Bottom of Page)
 // ============================================
 export const footerContent = {
   copyright: "Designed & built with precision & an unreasonable amount of console.log.",
-  tagline: "No AI was harmed in the making of this portfolio.",
+  tagline: "No AI was harmed in the making of this portfolio. 😅",
   formspreeCredit: "Forms powered by Formspree (because reinventing email infrastructure is a bad life choice.).",
   devHumor: "If something breaks, it's not a bug-it's a feature waiting to be discovered.",
 } as const;
 
 // ============================================
-// 12. SOCIAL LINKS
+// 11. SOCIAL LINKS (Used in Hero & Contact)
 // ============================================
-// Icons: Lucide React icons
 export const socialLinks: SocialLink[] = [
   {
     name: "GitHub",
@@ -232,26 +319,14 @@ export const socialLinks: SocialLink[] = [
   },
   {
     name: "LinkedIn",
-    url: "https://linkedin.com/in/yourprofile",
+    url: "https://linkedin.com/in/DevCodeHub99",
     icon: "Linkedin",
     ariaLabel: "Visit my LinkedIn profile",
   },
   {
     name: "X",
     url: "https://x.com/DevCodeHub99",
-    icon: "X",
+    icon: "Twitter",
     ariaLabel: "Visit my X profile",
   },
 ];
-
-// ============================================
-// 13. NAVIGATION
-// ============================================
-export const navLinks = [
-  { href: "#about", label: "About" },
-  { href: "#skills", label: "Skills" },
-  { href: "#projects", label: "Projects" },
-  { href: "#blog", label: "Blog" },
-  { href: "#testimonials", label: "Testimonials" },
-  { href: "#contact", label: "Contact" },
-] as const;
